@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 export default function Home() {
+
   return (
     <div className="bg-white h-full flex flex-row">
       <div> Incomes pie chart</div>

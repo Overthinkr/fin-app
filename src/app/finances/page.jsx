@@ -1,5 +1,9 @@
 'use client';
+import { updatedExpense } from "@/lib/features/expenseSlice";
+import { updatedIncome } from "@/lib/features/incomeSlice";
+import { updatedSavings } from "@/lib/features/savingSlice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Finances() {
 
@@ -10,6 +14,8 @@ export default function Finances() {
     const [income, setIncome] = useState({ Amount: "", Category: "" });
     const [expense, setExpense] = useState({ Amount: "", Category: "" });
     const [saving, setSaving] = useState({ Amount: "", Category: "" });
+
+    const dispatch = useDispatch();
 
     const addIncome = () => {
         if (income.Amount && income.Category) {
@@ -32,9 +38,16 @@ export default function Finances() {
         }
     };
 
+    const submitForm = (e) => {
+        e.preventdefault();
+        dispatch(updatedIncome(incomes))
+        dispatch(updatedExpense(expenses))
+        dispatch(updatedSavings(savings))
+    }
+
     return (
         <div>
-            <form className="w-full">
+            <form className="w-full" onSubmit={submitForm}>
                 <div className="flex w-full flex-col">
                     <div className="flex flex-row gap-4 m-4 justify-center w-full items-center p-6">
                         <p className="font-semibold text-xl"> Don&apos;t be shy, tell us your budget:</p>
@@ -46,7 +59,7 @@ export default function Finances() {
                             onChange={(e) => setBudget(Number(e.target.value))}
                         />
                     </div>
-                    <div className="grid grid-cols-2 gap-4 my-10 mx-16">
+                    {budget !== '' && <div className="grid grid-cols-2 gap-4 my-10 mx-16">
                         <div className="bg-green-500 rounded-xl p-4 justify-between items-center flex">
                             <div className="gap-4 flex">
                                 <input
@@ -79,17 +92,17 @@ export default function Finances() {
                             <ul className="gap-2 flex flex-col text-center">
                                 {incomes.map((income, index) => (
                                     <li key={index} className="bg-green-500 text-black py-2 px-6 rounded-xl">
-                                        ${income.Amount} on {income.Category}
+                                        ${income.Amount} from {income.Category}
                                     </li>
                                 ))}
                                 {expenses.map((expense, index) => (
                                     <li key={index} className="bg-red-500 text-black py-2 px-6 rounded-xl">
-                                        Amount: {expense.Amount}, Category: {expense.Category}
+                                        ${expense.Amount} on {expense.Category}
                                     </li>
                                 ))}
                                 {savings.map((saving, index) => (
                                     <li key={index} className="bg-blue-500 text-black py-2 px-6 rounded-xl">
-                                        Amount: {saving.Amount}, Category: {saving.Category}
+                                        ${saving.Amount} for {saving.Category}
                                     </li>
                                 ))}
                             </ul>
@@ -150,8 +163,12 @@ export default function Finances() {
                                 Add Savings
                             </button>
                         </div>
+
+                        <div className="col-span-2 items-center justify-center text-center">
+                            <button type="submit" className="bg-black rounded-xl text-white p-3 px-6"> Analyze✨ </button>
+                        </div>
                     </div>
-                </div>
+                    }</div>
             </form>
         </div>
     );
