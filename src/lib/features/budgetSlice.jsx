@@ -1,4 +1,4 @@
-const { createSlice } = require("@reduxjs/toolkit/dist");
+const { createSlice } = require("@reduxjs/toolkit");
 
 const budgetSlice = createSlice({
     name: 'budget',

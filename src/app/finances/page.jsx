@@ -2,8 +2,9 @@
 import { updatedExpense } from "@/lib/features/expenseSlice";
 import { updatedIncome } from "@/lib/features/incomeSlice";
 import { updatedSavings } from "@/lib/features/savingSlice";
+import { useAppDispatch } from "@/lib/hooks";
+import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 
 export default function Finances() {
 
@@ -15,7 +16,8 @@ export default function Finances() {
     const [expense, setExpense] = useState({ Amount: "", Category: "" });
     const [saving, setSaving] = useState({ Amount: "", Category: "" });
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const addIncome = () => {
         if (income.Amount && income.Category) {
@@ -39,10 +41,11 @@ export default function Finances() {
     };
 
     const submitForm = (e) => {
-        e.preventdefault();
+        e.preventDefault()
         dispatch(updatedIncome(incomes))
         dispatch(updatedExpense(expenses))
         dispatch(updatedSavings(savings))
+        router.push('/')
     }
 
     return (
