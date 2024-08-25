@@ -7,7 +7,7 @@ const expenseSlice = createSlice({
     },
     reducers: {
         updatedExpense: (state, action) => {
-            state.value == action.payload;
+            state.value = action.payload;
         }
     }
 })

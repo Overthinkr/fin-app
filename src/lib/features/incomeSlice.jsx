@@ -7,7 +7,7 @@ const incomeSlice = createSlice({
     },
     reducers: {
         updatedIncome: (state, action) => {
-            state.value == action.payload;
+            state.value = action.payload;
         }
     }
 })

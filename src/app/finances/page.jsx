@@ -1,4 +1,5 @@
 'use client';
+import { updated } from "@/lib/features/budgetSlice";
 import { updatedExpense } from "@/lib/features/expenseSlice";
 import { updatedIncome } from "@/lib/features/incomeSlice";
 import { updatedSavings } from "@/lib/features/savingSlice";
@@ -7,6 +8,8 @@ import { useRouter } from 'next/navigation'
 import { useState } from "react";
 
 export default function Finances() {
+
+
 
     const [budget, setBudget] = useState("");
     const [incomes, setIncomes] = useState([]);
@@ -42,9 +45,11 @@ export default function Finances() {
 
     const submitForm = (e) => {
         e.preventDefault()
+        console.log(incomes)
         dispatch(updatedIncome(incomes))
         dispatch(updatedExpense(expenses))
         dispatch(updatedSavings(savings))
+        dispatch(updated(budget))
         router.push('/')
     }
 

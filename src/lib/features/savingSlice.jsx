@@ -3,11 +3,11 @@ const { createSlice } = require("@reduxjs/toolkit");
 const savingSlice = createSlice({
     name: 'saving',
     initialState: {
-        value: []
+        value: 0
     },
     reducers: {
         updatedSavings: (state, action) => {
-            state.value == action.payload;
+            state.value = action.payload;
         }
     }
 })
